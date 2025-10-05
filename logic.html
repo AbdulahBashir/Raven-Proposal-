@@ -1,0 +1,1730 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raven Project Calculator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&amp;family=Poppins:wght@300;500;700&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --raven-dark: #1a2a3a;
+            --raven-blue: #2c5f7d;
+            --raven-accent: #e67e22;
+            --raven-light: #f8f9fa;
+            --raven-gray: #6c757d;
+            --raven-success: #28a745;
+            --raven-white: #ffffff;
+            --raven-border: #dee2e6;
+            --raven-error: #dc3545;
+            --raven-bg-gradient: linear-gradient(145deg, #f5f7fa 0%, #e8ecf1 100%);
+            --card-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            --card-hover-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--raven-bg-gradient);
+            color: var(--raven-dark);
+            line-height: 1.7;
+            position: relative;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            background: var(--raven-white);
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+            position: relative;
+        }
+        .header {
+            background: linear-gradient(135deg, var(--raven-dark), var(--raven-blue));
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .header h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+        .header p {
+            font-size: 17px;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        .raven-logo {
+            width: 60px;
+            height: 60px;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 40px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+        }
+        .section {
+            padding: 30px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        h2 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--raven-blue);
+            font-size: 26px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--raven-accent);
+            border-radius: 2px;
+        }
+        h2 .icon {
+            margin-right: 12px;
+            font-size: 26px;
+            color: var(--raven-accent);
+        }
+        h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 20px;
+            color: var(--raven-dark);
+            margin-bottom: 18px;
+        }
+        .input-group {
+            margin-bottom: 25px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--raven-blue);
+            font-size: 15px;
+        }
+        select, input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid var(--raven-border);
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
+            font-family: 'Poppins', sans-serif;
+        }
+        select:focus, input:focus {
+            border-color: var(--raven-blue);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(44, 95, 125, 0.15);
+        }
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 18px center;
+            background-size: 16px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+        .card {
+            background: var(--raven-light);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-hover-shadow);
+        }
+        .card h3 {
+            color: var(--raven-blue);
+            border-bottom: 2px solid var(--raven-border);
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .card h3 .icon {
+            margin-right: 10px;
+            color: var(--raven-accent);
+        }
+        button {
+            background: var(--raven-accent);
+            color: white;
+            border: none;
+            padding: 16px;
+            width: 100%;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 0.5px;
+        }
+        button:hover {
+            background: #d35400;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(230, 126, 34, 0.3);
+        }
+        button .icon {
+            margin-right: 10px;
+        }
+        .results {
+            background: var(--raven-light);
+            border-radius: 12px;
+            padding: 30px;
+            margin-top: 25px;
+            box-shadow: var(--card-shadow);
+        }
+        .price-display {
+            font-size: 32px;
+            font-weight: 700;
+            text-align: center;
+            margin: 25px 0;
+            padding: 25px;
+            background: white;
+            border-radius: 12px;
+            border: 2px dashed var(--raven-blue);
+            color: var(--raven-blue);
+            position: relative;
+            overflow: hidden;
+        }
+        .price-display:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100" fill="none" stroke="%232c5f7d" stroke-width="0.5" stroke-dasharray="5,5"><rect width="100" height="100"/></svg>');
+            opacity: 0.1;
+        }
+        .price-display small {
+            font-size: 17px;
+            color: var(--raven-gray);
+            display: block;
+            margin-top: 8px;
+            font-weight: normal;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 15px;
+        }
+        th, td {
+            padding: 14px 18px;
+            text-align: left;
+            border-bottom: 1px solid var(--raven-border);
+        }
+        th {
+            background: var(--raven-blue);
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+        tr:nth-child(even) {
+            background: rgba(44, 95, 125, 0.05);
+        }
+        tr:hover {
+            background: rgba(44, 95, 125, 0.1);
+        }
+        .slider-container {
+            margin: 30px 0;
+        }
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 12px;
+            font-weight: 600;
+            color: var(--raven-blue);
+        }
+        .price-slider {
+            width: 100%;
+            height: 12px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: linear-gradient(to right, var(--raven-success), var(--raven-accent));
+            border-radius: 6px;
+            outline: none;
+            margin: 15px 0;
+        }
+        .price-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--raven-blue);
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border: 3px solid white;
+            transition: transform 0.2s ease;
+        }
+        .price-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+        .final-price {
+            text-align: center;
+            margin: 25px 0;
+            font-size: 18px;
+        }
+        .final-price span {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--raven-accent);
+            margin-left: 10px;
+        }
+        .disclaimer {
+            font-size: 14px;
+            color: var(--raven-gray);
+            margin-top: 30px;
+            padding: 18px;
+            background: rgba(0, 0, 0, 0.03);
+            border-radius: 10px;
+            border-left: 4px solid var(--raven-accent);
+            line-height: 1.6;
+        }
+        .hidden {
+            display: none;
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            background: var(--raven-accent);
+            color: white;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        .markup-info {
+            background: rgba(40, 167, 69, 0.1);
+            padding: 18px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid var(--raven-success);
+            line-height: 1.6;
+        }
+        .markup-info strong {
+            color: var(--raven-success);
+        }
+        .error-message {
+            color: var(--raven-error);
+            font-size: 14px;
+            margin-top: 8px;
+            display: none;
+        }
+        .required-field {
+            border-color: var(--raven-error) !important;
+        }
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 28px;
+                margin-left: 40px;
+            }
+            .section {
+                padding: 20px;
+            }
+            .card {
+                padding: 20px;
+            }
+        }
+
+        /* Raven graphic elements */
+        .raven-graphic {
+            position: absolute;
+            opacity: 0.1;
+            z-index: 0;
+            font-size: 100px;
+            color: white;
+        }
+        .raven-1 {
+            top: 20px;
+            right: 20px;
+        }
+        .raven-2 {
+            bottom: 20px;
+            left: 20px;
+            font-size: 80px;
+        }
+        
+        /* Bank cards */
+        .bank-card {
+            background: white;
+            border-radius: 10px;
+            padding: 18px;
+            margin-bottom: 18px;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .bank-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--card-hover-shadow);
+        }
+        .bank-icon {
+            font-size: 28px;
+            margin-right: 18px;
+            color: var(--raven-blue);
+            min-width: 40px;
+            text-align: center;
+        }
+        .bank-info {
+            flex: 1;
+        }
+        .bank-info h4 {
+            margin-bottom: 5px;
+            color: var(--raven-dark);
+        }
+        .bank-link {
+            color: var(--raven-blue);
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 15px;
+            display: inline-flex;
+            align-items: center;
+        }
+        .bank-link:hover {
+            text-decoration: underline;
+        }
+        .bank-link .icon {
+            margin-right: 6px;
+            font-size: 14px;
+        }
+        
+        /* Payment calculator */
+        .payment-calculator {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 25px;
+            box-shadow: var(--card-shadow);
+        }
+        .payment-inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 18px;
+            margin-bottom: 20px;
+        }
+        .payment-result {
+            background: var(--raven-light);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .payment-result h4 {
+            margin-bottom: 15px;
+            color: var(--raven-blue);
+            font-size: 18px;
+        }
+        .payment-result p {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        .payment-result strong {
+            color: var(--raven-dark);
+        }
+        
+        /* Tab system */
+        .tab-container {
+            margin-top: 25px;
+        }
+        .tab-buttons {
+            display: flex;
+            border-bottom: 1px solid var(--raven-border);
+        }
+        .tab-button {
+            padding: 12px 25px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--raven-gray);
+            border-bottom: 3px solid transparent;
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .tab-button.active {
+            color: var(--raven-blue);
+            border-bottom: 3px solid var(--raven-blue);
+        }
+        .tab-button:after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--raven-blue);
+            transition: width 0.3s ease;
+        }
+        .tab-button:hover:after {
+            width: 100%;
+        }
+        .tab-content {
+            display: none;
+            padding: 25px 0;
+            animation: fadeIn 0.5s ease;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Video sections */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .video-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .gallery-link {
+            display: inline-flex;
+            align-items: center;
+            margin-top: 20px;
+            padding: 14px 25px;
+            background-color: var(--raven-blue);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .gallery-link:hover {
+            background-color: var(--raven-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        .gallery-link i {
+            margin-right: 10px;
+        }
+        
+        /* Purchase agreement section */
+        .purchase-agreement {
+            background: var(--raven-light);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 30px;
+            text-align: center;
+            border-left: 4px solid var(--raven-accent);
+            box-shadow: var(--card-shadow);
+        }
+        .purchase-agreement h3 {
+            color: var(--raven-blue);
+            margin-bottom: 15px;
+        }
+        .docusign-btn {
+            background: var(--raven-blue);
+            color: white;
+            padding: 14px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .docusign-btn:hover {
+            background: var(--raven-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        .docusign-btn i {
+            margin-right: 10px;
+        }
+        
+        /* Price lookup tool */
+        .price-lookup-tool {
+            margin-top: 30px;
+        }
+        .market-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .market-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: var(--card-shadow);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .market-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-hover-shadow);
+            border-color: var(--raven-blue);
+        }
+        .market-card h3 {
+            color: var(--raven-blue);
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        .market-card p {
+            color: var(--raven-dark);
+            font-size: 15px;
+            font-weight: 500;
+        }
+        .price-modal {
+            border: none;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 750px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            padding: 0;
+            animation: modalFadeIn 0.4s ease;
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .price-modal::backdrop {
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+        }
+        .modal-header {
+            background: var(--raven-blue);
+            color: white;
+            padding: 18px 25px;
+            font-size: 20px;
+            font-weight: 600;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-body {
+            background: #fff;
+            padding: 25px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        .modal-body p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        .modal-body table {
+            margin: 20px 0;
+        }
+        .modal-body h3 {
+            margin-top: 25px;
+            color: var(--raven-blue);
+            font-size: 18px;
+        }
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            line-height: 1;
+        }
+        .close-btn:hover {
+            transform: scale(1.2);
+        }
+
+        /* New section for TAMKO videos */
+        .tamko-section {
+            background: linear-gradient(145deg, #f8f9fa 0%, #eef1f5 100%);
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+            box-shadow: var(--card-shadow);
+        }
+        .tamko-section h2 {
+            color: var(--raven-blue);
+            margin-bottom: 20px;
+        }
+        .tamko-section p {
+            margin-bottom: 20px;
+            color: var(--raven-dark);
+        }
+
+        /* Installation section */
+        .installation-section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: var(--card-shadow);
+        }
+        .installation-section h2 {
+            color: var(--raven-blue);
+            margin-bottom: 20px;
+        }
+        .installation-section p {
+            margin-bottom: 20px;
+            color: var(--raven-dark);
+        }
+
+        /* Floating action button */
+        .fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--raven-accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 6px 15px rgba(230, 126, 34, 0.3);
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+        .fab:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 10px 25px rgba(230, 126, 34, 0.4);
+        }
+
+        /* Side menu */
+        .side-menu {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            z-index: 99;
+        }
+        .menu-button {
+            width: 50px;
+            height: 50px;
+            background: var(--raven-accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .menu-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+        .menu-content {
+            position: absolute;
+            right: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            width: 250px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .menu-content.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .menu-item {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .menu-item:hover {
+            background: var(--raven-light);
+        }
+        .menu-item i {
+            margin-right: 10px;
+            color: var(--raven-blue);
+        }
+        .discount-item {
+            background: rgba(40, 167, 69, 0.1);
+            border-left: 3px solid var(--raven-success);
+        }
+        .resource-item {
+            background: rgba(44, 95, 125, 0.1);
+            border-left: 3px solid var(--raven-blue);
+        }
+
+        /* Comparison grid */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0;
+            border: 1px solid var(--raven-border);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 25px;
+        }
+        .comparison-grid > div {
+            padding: 18px;
+            display: flex;
+            align-items: center;
+            font-size: 15px;
+            border-bottom: 1px solid var(--raven-border);
+        }
+        .feature-name {
+            background: var(--raven-light);
+            text-align: left;
+            font-weight: bold;
+            border-right: 1px solid var(--raven-border);
+        }
+        .triguard {
+            background: rgba(40, 167, 69, 0.1);
+            border-right: 1px solid var(--raven-border);
+            font-weight: 600;
+            color: var(--raven-success);
+        }
+        .competitor {
+            background: rgba(220, 53, 69, 0.1);
+            font-weight: 500;
+            color: var(--raven-error);
+        }
+        .row:hover > .feature-name,
+        .row:hover > .triguard,
+        .row:hover > .competitor {
+            background-color: rgba(44, 95, 125, 0.1) !important;
+            transition: background 0.3s ease;
+        }
+        .comparison-grid .icon {
+            font-size: 1.2em;
+            margin-right: 10px;
+            color: inherit;
+        }
+        @media (max-width: 768px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+            .comparison-grid > div {
+                border-bottom: 1px solid var(--raven-border);
+                border-right: none !important;
+            }
+            .side-menu {
+                right: 10px;
+            }
+            .menu-content {
+                width: 200px;
+                right: 50px;
+            }
+        }
+    </style>
+</head>
+<body cz-shortcut-listen="true">
+    <div class="container">
+        <div class="header">
+            <div class="raven-logo">R</div>
+            <h1>Raven Project Calculator</h1>
+            <p>Professional Roofing Estimates &amp; Financing</p>
+            <div class="raven-graphic raven-1">R</div>
+            <div class="raven-graphic raven-2">R</div>
+        </div>
+
+        <!-- Price Lookup Tool Section -->
+        <div class="section price-lookup-tool">
+            <h2>
+                <span class="icon">🔍</span>
+                Texas Roofing Price Lookup Tool
+            </h2>
+            <p>Click on a city to view detailed roofing cost breakdowns and common adders:</p>
+            
+            <div class="market-grid" id="marketGrid"><div class="market-card"><h3>Dallas / Fort Worth</h3><p>$400 – $450</p></div><div class="market-card"><h3>Houston</h3><p>$400 – $450</p></div><div class="market-card"><h3>Austin</h3><p>$425 – $475</p></div><div class="market-card"><h3>San Antonio</h3><p>$375 – $425</p></div><div class="market-card"><h3>Corpus Christi</h3><p>$350 – $400</p></div><div class="market-card"><h3>Rio Grande Valley</h3><p>$325 – $375</p></div></div>
+            
+            <dialog class="price-modal" id="priceModal">
+                <div class="modal-header">
+                    <span id="modalTitle"></span>
+                    <button class="close-btn" onclick="priceModal.close()">×</button>
+                </div>
+                <div class="modal-body" id="modalBody"></div>
+            </dialog>
+        </div>
+
+        <div class="section calculator-section">
+            <h2>
+                <span class="icon">📋</span>
+                Project Details
+            </h2>
+            
+            <div class="grid">
+                <div class="input-group">
+                    <label for="product">Roofing Product</label>
+                    <select id="product">
+                        <option value="">Select Product</option>
+                        <option value="titan">Titan XT</option>
+                        <option value="heritage">Heritage</option>
+                    </select>
+                    <div id="product-error" class="error-message">Please select a product</div>
+                </div>
+                <div class="input-group">
+                    <label for="region">Region</label>
+                    <select id="region">
+                        <option value="">Select Region</option>
+                        <option value="rgv">RGV</option>
+                        <option value="corpus">Corpus Christi</option>
+                        <option value="dallas">Dallas</option>
+                        <option value="sanantonio">San Antonio</option>
+                    </select>
+                    <div id="region-error" class="error-message">Please select a region</div>
+                </div>
+                <div class="input-group">
+                    <label for="sq">Square Footage (SQ)</label>
+                    <input type="number" id="sq" placeholder="Enter SQ needed" min="1">
+                    <div id="sq-error" class="error-message">Please enter a valid SQ value</div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3><span class="icon">🛠️</span> Standard Inclusions</h3>
+                <div class="standard-item">
+                    <input type="checkbox" id="plywood-check" checked="" disabled="">
+                    <label for="plywood-check">10 Plywood Sheets</label>
+                    <span class="price-tag">Included</span>
+                </div>
+                <div class="standard-item">
+                    <input type="checkbox" id="fascia-check" checked="" disabled="">
+                    <label for="fascia-check">15FT Fascia Repair</label>
+                    <span class="price-tag">Included</span>
+                </div>
+                <div class="standard-item">
+                    <input type="checkbox" id="soffit-check" checked="" disabled="">
+                    <label for="soffit-check">5FT Soffit</label>
+                    <span class="price-tag">Included</span>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3><span class="icon">➕</span> Additional Services</h3>
+                <div class="grid">
+                    <div class="input-group">
+                        <label for="decking">Extra Plywood Sheets</label>
+                        <input type="number" id="decking" placeholder="Additional sheets" min="0" value="0">
+                        <small>$100 each</small>
+                    </div>
+                    <div class="input-group">
+                        <label for="fascia">Additional Fascia (FT)</label>
+                        <input type="number" id="fascia" placeholder="Extra length" min="0" value="0">
+                        <small>$15/FT</small>
+                    </div>
+                    <div class="input-group">
+                        <label for="soffit">Additional Soffit (FT)</label>
+                        <input type="number" id="soffit" placeholder="Extra length" min="0" value="0">
+                        <small>$25/FT</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3><span class="icon">📝</span> Required Fees</h3>
+                <div class="grid">
+                    <div class="input-group">
+                        <label for="permit">Permit Cost</label>
+                        <input type="number" id="permit" placeholder="Auto-calculated" readonly="">
+                        <small>3.5% of materials</small>
+                    </div>
+                    <div class="input-group">
+                        <label for="wind">Wind Certification <span id="wind-badge" class="badge hidden">Required</span></label>
+                        <input type="number" id="wind" placeholder="Enter amount" min="0" value="0" readonly="">
+                        <small id="wind-note">Optional for most regions</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="projectResults" class="section">
+            <h2>
+                <span class="icon">💰</span>
+                Project Estimate
+            </h2>
+            
+            <div class="price-display">
+                <div>Total Project Cost</div>
+                <span id="totalPrice">$0.00</span>
+                <small>Price Per SQ: <span id="basePricePerSQ">$0.00</span></small>
+            </div>
+            
+            <div class="results">
+                <h3>Price Breakdown</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Base Roofing</td>
+                            <td id="baseCost">$0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Additional Plywood</td>
+                            <td id="deckingCost">$0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Additional Fascia</td>
+                            <td id="fasciaCost">$0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Additional Soffit</td>
+                            <td id="soffitCost">$0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Permit</td>
+                            <td id="permitCost">$0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Wind Certification</td>
+                            <td id="windCost">$0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Sales Tax (8.25%)</td>
+                            <td id="taxCost">$0.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="final-price">
+                Final Project Price: <span id="finalProjectPrice">$0.00</span>
+            </div>
+        </div>
+
+        <div id="financingSection" class="section hidden">
+            <h2>
+                <span class="icon">💳</span>
+                Financing Options
+            </h2>
+            
+            <div class="tab-container">
+                <div class="tab-buttons">
+                    <button class="tab-button active" onclick="openTab('inhouseTab')">In-House Financing</button>
+                    <button class="tab-button" onclick="openTab('bankTab')">Bank Financing</button>
+                </div>
+                
+                <div id="inhouseTab" class="tab-content active">
+                    <div class="payment-calculator">
+                        <h3>In-House Payment Calculator</h3>
+                        <p>Calculate your monthly payments with our in-house financing options.</p>
+                        
+                        <div class="payment-inputs">
+                            <div class="input-group">
+                                <label for="loanAmount">Loan Amount ($)</label>
+                                <input type="number" id="loanAmount" placeholder="Enter amount" min="1000" step="100">
+                            </div>
+                            <div class="input-group">
+                                <label for="loanTerm">Term (months)</label>
+                                <select id="loanTerm">
+                                    <option value="18">18 months</option>
+                                    <option value="36">36 months</option>
+                                    <option value="48">48 months</option>
+                                    <option value="60">60 months</option>
+                                    <option value="custom">Custom term</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="interestRate">Interest Rate (%)</label>
+                                <input type="number" id="interestRate" value="5.99" min="3.99" max="15" step="0.01">
+                            </div>
+                        </div>
+                        
+                        <button onclick="calculateInHousePayment()">
+                            <span class="icon">🧮</span>
+                            Calculate Payment
+                        </button>
+                        
+                        <div id="inhouseResult" class="payment-result hidden">
+                            <h4>Payment Plan</h4>
+                            <p>Monthly Payment: <strong id="monthlyPayment">$0.00</strong></p>
+                            <p>Total Interest: <strong id="totalInterest">$0.00</strong></p>
+                            <p>Total Cost: <strong id="totalCost">$0.00</strong></p>
+                        </div>
+                    </div>
+                    
+                    <div class="disclaimer">
+                        <p><strong>In-House Financing Terms:</strong> Requires 50% downpayment. Rates vary from 3.99% to 15% APR based on creditworthiness. Minimum loan amount $1,000. Maximum term 60 months.</p>
+                    </div>
+                </div>
+                
+                <div id="bankTab" class="tab-content">
+                    <h3>Bank Financing Partners</h3>
+                    <p>We work with these trusted financing partners to help you get the best rates:</p>
+                    
+                    <div class="bank-card">
+                        <div class="bank-icon">
+                            <i class="fas fa-university"></i>
+                        </div>
+                        <div class="bank-info">
+                            <h4>Acorn Finance</h4>
+                            <a href="https://my.acornfinance.com/sign-in" class="bank-link" target="_blank">
+                                <i class="fas fa-external-link-alt"></i> Apply Now
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="bank-card">
+                        <div class="bank-icon">
+                            <i class="fas fa-university"></i>
+                        </div>
+                        <div class="bank-info">
+                            <h4>HFS Financial</h4>
+                            <a href="https://www.hfsfinancial.net/promo/6824a3613e0636e69b0f9e87/" class="bank-link" target="_blank">
+                                <i class="fas fa-external-link-alt"></i> Apply Now
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="bank-card">
+                        <div class="bank-icon">
+                            <i class="fas fa-university"></i>
+                        </div>
+                        <div class="bank-info">
+                            <h4>Lyon Financial</h4>
+                            <a href="https://www.lyonfinancial.net/apply/?lid=11-21432" class="bank-link" target="_blank">
+                                <i class="fas fa-external-link-alt"></i> Apply Now
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="bank-card">
+                        <div class="bank-icon">
+                            <i class="fas fa-university"></i>
+                        </div>
+                        <div class="bank-info">
+                            <h4>FINTURF</h4>
+                            <a href="https://merchant.finturf.com/login" class="bank-link" target="_blank">
+                                <i class="fas fa-external-link-alt"></i> Apply Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Purchase agreement section -->
+            <div class="purchase-agreement">
+                <h3>Ready to Proceed?</h3>
+                <p>If you've accepted this estimate and secured financing, please complete the Roof Purchase Agreement:</p>
+                <a href="https://account.docusign.com/oauth/auth?response_type=code&amp;scope=all%20click.manage%20me_profile%20room_forms%20room_fields%20inproductcommunication_read%20data_explorer_signing_insights%20notary_read%20notary_write%20search_read%20search_write%20webforms_manage%20dtr%20valmod_manage%20spring_read%20spring_write%20signature&amp;client_id=2CC56DC9-4BCD-4B55-8AB0-8BA60BAE1065&amp;redirect_uri=https%3A%2F%2Fapps.docusign.com%2Fauthenticate&amp;state=%7B%22widgetId%22%3A%22%40ds%2Fsend%22%2C%22xsrfToken%22%3A%22VSU0%2BRcOUCC%2FQtkQ%2FpAKvZLYcA7wYoG4m3tTdZmU7S1INgwn7ahBaF4fleGC8uT7BZAAtNOnrnRxQC8G8RU0mQf7gl%2BBYmBJ8vou3jqCdtadIrRKz07vMHNMBoEdNfrPW28%2BPZaOXeJIbF6RVsXcc8lVQm%2FPkHoEGSd598lPdzY%3D%22%2C%22redirectUri%22%3A%22%2Fsend%22%2C%22authTxnId%22%3A%22801bcf5e-d492-4ac7-957b-7301da4affe2%22%7D" class="docusign-btn" target="_blank">
+                    <i class="fas fa-file-signature"></i> Sign Purchase Agreement
+                </a>
+                <p style="font-size: 14px; margin-top: 15px;">
+                    <strong>Note:</strong> This agreement must be completed before work can begin.
+                </p>
+            </div>
+        </div>
+
+        <!-- Why Choose Us Section -->
+        <div class="section">
+            <h2>
+                <span class="icon">🏆</span>
+                Why Choose Our Roofing Services
+            </h2>
+            
+            <div class="comparison-grid">
+                <div class="row feature-name"><span class="icon">🛠️</span>Workmanship Warranty</div>
+                <div class="row triguard"><span class="icon">✔️</span>Lifetime</div>
+                <div class="row competitor"><span class="icon">❌</span>5- 10 Years Max </div>
+
+                <div class="row feature-name"><span class="icon">🏠</span>TAMKO Shingle Warranty</div>
+                <div class="row triguard"><span class="icon">✔️</span>30 Years &amp; 50 Years </div>
+                <div class="row competitor"><span class="icon">❌</span>Varies</div>
+
+                <div class="row feature-name"><span class="icon">⏱️</span>Install Time</div>
+                <div class="row triguard"><span class="icon">⚡</span>10 Days or under</div>
+                <div class="row competitor"><span class="icon">🐢</span>Up To 30 Days</div>
+
+                <div class="row feature-name"><span class="icon">🌪️</span>Wind Certification</div>
+                <div class="row triguard"><span class="icon">✔️</span>Included</div>
+                <div class="row competitor"><span class="icon">❓</span>Extra Cost</div>
+
+                <div class="row feature-name"><span class="icon">🪵</span>10 Sheets of Plywood</div>
+                <div class="row triguard"><span class="icon">✔️</span>Included</div>
+                <div class="row competitor"><span class="icon">💸</span>$100+ Each</div>
+
+                <div class="row feature-name"><span class="icon">💧</span>Water Barrier</div>
+                <div class="row triguard"><span class="icon">✔️</span>4ft Shield</div>
+                <div class="row competitor"><span class="icon">❌</span>Often Skipped</div>
+
+                <div class="row feature-name"><span class="icon">🛡️</span>Underlayment</div>
+                <div class="row triguard"><span class="icon">✔️</span>Synthetic Felt</div>
+                <div class="row competitor"><span class="icon">📄</span>Paper Felt</div>
+
+                <div class="row feature-name"><span class="icon">🌬️</span>New Vent System</div>
+                <div class="row triguard"><span class="icon">✔️</span>Included</div>
+                <div class="row competitor"><span class="icon">💰</span>Extra</div>
+
+                <div class="row feature-name"><span class="icon">💯</span>Affordable Pricing Guarantee</div>
+                <div class="row triguard"><span class="icon">✔️</span>Fair Price Guaranteed</div>
+                <div class="row competitor"><span class="icon">❌</span>No Policy</div>
+
+                <div class="row feature-name"><span class="icon">👓</span>Transparent Quotes</div>
+                <div class="row triguard"><span class="icon">✔️</span>No Surprises</div>
+                <div class="row competitor"><span class="icon">🚫</span>Hidden Fees</div>
+
+                <div class="row feature-name"><span class="icon">✅</span>Company Standards</div>
+                <div class="row triguard"><span class="icon">✔️</span>Code-Compliant</div>
+                <div class="row competitor"><span class="icon">❓</span>Vary by Crew</div>
+            </div>
+
+            <p class="disclaimer" style="text-align: center; margin-top: 30px;">
+                We deliver peace of mind with quality, integrity, and great value on every roof.
+            </p>
+        </div>
+
+        <!-- TAMKO Explainer Videos Section -->
+        <div class="section tamko-section">
+            <h2>
+                <span class="icon">🏆</span>
+                TAMKO Roofing Products
+            </h2>
+            <p>Learn about our premium TAMKO roofing products and their benefits:</p>
+            
+            <div class="video-grid">
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/Yw8-z7UYkAE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/n3WWAjbL2Ww" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/XcHuIH35hbc" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/jK0ag6o_wEs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/u3Ae0a4PTkQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/mvwTtol-V4Q" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- Installation Process Section -->
+        <div class="section installation-section">
+            <h2>
+                <span class="icon">👷</span>
+                Our Installation Process
+            </h2>
+            <p>See how we professionally install roofing shingles to ensure quality and durability:</p>
+            
+            <div class="video-grid">
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/AdawPr-16ts" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customer Videos Section -->
+        <div class="section">
+            <h2>
+                <span class="icon">🎥</span>
+                Customer Testimonials
+            </h2>
+            <p>Hear what our customers have to say about their experience with Raven Roofing:</p>
+            
+            <div class="video-grid">
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/UEdocWwZMpY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/2icgiAVDqbU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- Promotional Videos Section -->
+        <div class="section">
+            <h2>
+                <span class="icon">📹</span>
+                Our Work in Action
+            </h2>
+            <p>See our team at work and learn more about our roofing solutions:</p>
+            
+            <div class="video-grid">
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/BWZwLG6Ervk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- Photo Gallery Section -->
+        <div class="section">
+            <h2>
+                <span class="icon">📷</span>
+                Project Gallery
+            </h2>
+            <p>Browse our collection of completed projects to see the quality of our work.</p>
+            
+            <a href="https://www.dropbox.com/scl/fo/cr19otcqr3y1d0xaqiasx/AKN3gAEz3z4rXIFXlCD1UcE?rlkey=aa2xbfb1tzi38qche59x614sp&amp;st=20god2k0&amp;dl=0" class="gallery-link" target="_blank">
+                <i class="fas fa-images"></i> View Photo Gallery
+            </a>
+        </div>
+    </div>
+
+    <!-- Side Menu -->
+    <div class="side-menu">
+        <div class="menu-button" onclick="toggleMenu()">
+            <i class="fas fa-ellipsis-h"></i>
+        </div>
+        <div class="menu-content" id="menuContent">
+            <h4 style="margin-bottom: 15px; color: var(--raven-blue);">Discounts</h4>
+            <div class="menu-item discount-item" onclick="applyDiscount('veteran')">
+                <i class="fas fa-medal"></i> Veteran (10% Off)
+            </div>
+            <div class="menu-item discount-item" onclick="applyDiscount('firstResponder')">
+                <i class="fas fa-ambulance"></i> First Responder (10% Off)
+            </div>
+            <div class="menu-item discount-item" onclick="applyDiscount('teacher')">
+                <i class="fas fa-chalkboard-teacher"></i> Teacher (10% Off)
+            </div>
+            <div class="menu-item discount-item" onclick="applyDiscount('sameDay')">
+                <i class="fas fa-calendar-check"></i> Same Day Sign Up ($500 Off)
+            </div>
+            <div class="menu-item discount-item" onclick="applyDiscount('senior')">
+                <i class="fas fa-user-clock"></i> Senior Citizen (6 Months No Payments)
+            </div>
+            
+            <h4 style="margin: 20px 0 15px; color: var(--raven-blue);">Resources</h4>
+            <div class="menu-item resource-item" onclick="window.open('https://app.roofgraf.com/', '_blank')">
+                <i class="fas fa-ruler-combined"></i> Measurement Tool
+            </div>
+            <div class="menu-item resource-item" onclick="window.open('https://pay.thspros.com/', '_blank')">
+                <i class="fas fa-calculator"></i> Commission Calculator
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating action button for quick access -->
+    <div class="fab" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // Pricing data for calculator
+        const pricingData = {
+            titan: {
+                regional: {
+                    rgv: 290,
+                    corpus: 325,
+                    dallas: 375,
+                    sanantonio: 345
+                }
+            },
+            heritage: {
+                regional: {
+                    rgv: 265,
+                    corpus: 300,
+                    dallas: 350,
+                    sanantonio: 320
+                }
+            }
+        };
+
+        // Pricing data for lookup tool
+        const priceLookupData = {
+            "Dallas / Fort Worth": {
+                base: "$400 – $450",
+                labor: "$175",
+                shingle: "$200",
+                other: "$25",
+                adders: {
+                    "Two-story": "+$25 – $50/SQ",
+                    "Steep pitch (7/12+)": "+$35 – $65/SQ",
+                    "Multi-layer tear-off": "+$20 – $50/SQ",
+                    "Cut-up roof layout": "+$20 – $40/SQ",
+                    "Premium shingles": "+$50 – $90/SQ"
+                }
+            },
+            "Houston": {
+                base: "$400 – $450",
+                labor: "$165",
+                shingle: "$210",
+                other: "$25",
+                adders: {
+                    "Two-story": "+$25 – $50/SQ",
+                    "Steep pitch": "+$35 – $65/SQ",
+                    "Cut-up roof": "+$20 – $50/SQ",
+                    "Skylight or chimney work": "+$15 – $30 each"
+                }
+            },
+            "Austin": {
+                base: "$425 – $475",
+                labor: "$185",
+                shingle: "$215",
+                other: "$30",
+                adders: {
+                    "Two-story": "+$30 – $55/SQ",
+                    "High pitch (>10/12)": "+$50 – $100/SQ",
+                    "Permit complexity": "+2% – 4% job total",
+                    "HOA shingle requirement": "+$25 – $40/SQ"
+                }
+            },
+            "San Antonio": {
+                base: "$375 – $425",
+                labor: "$160",
+                shingle: "$200",
+                other: "$20",
+                adders: {
+                    "Two-story": "+$25 – $45/SQ",
+                    "Valleys/dormers": "+$15 – $40/SQ",
+                    "Decking replacement": "$95 – $125 per board",
+                    "Soffit/fascia repairs": "$15 – $30/ft"
+                }
+            },
+            "Corpus Christi": {
+                base: "$350 – $400",
+                labor: "$150",
+                shingle: "$190",
+                other: "$20",
+                adders: {
+                    "Wind cert": "$700 – $850 flat",
+                    "Hurricane straps": "+$10 – $25/SQ",
+                    "Class 4 shingles": "+$50 – $100/SQ",
+                    "Coastal permit fees": "+3% – 4% of job"
+                }
+            },
+            "Rio Grande Valley": {
+                base: "$325 – $375",
+                labor: "$135",
+                shingle: "$180",
+                other: "$15",
+                adders: {
+                    "Two-story": "+$20 – $40/SQ",
+                    "Steep pitch": "+$35 – $60/SQ",
+                    "Extra dump fees": "$300 – $500",
+                    "Heat-resistant shingles": "+$40 – $80/SQ"
+                }
+            }
+        };
+
+        // Calculator variables
+        let currentTotal = 0;
+        let currentSQ = 0;
+        let baseCostPerSQ = 0;
+        let finalProjectPrice = 0;
+        let currentDiscount = null;
+
+        // DOM elements
+        const marketGrid = document.getElementById("marketGrid");
+        const priceModal = document.getElementById("priceModal");
+        const modalTitle = document.getElementById("modalTitle");
+        const modalBody = document.getElementById("modalBody");
+        const menuContent = document.getElementById("menuContent");
+
+        // Initialize the calculator and price lookup tool
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize price lookup tool
+            Object.entries(priceLookupData).forEach(([market, info]) => {
+                const card = document.createElement("div");
+                card.className = "market-card";
+                card.innerHTML = `<h3>${market}</h3><p>${info.base}</p>`;
+                card.onclick = () => openPriceModal(market);
+                marketGrid.appendChild(card);
+            });
+
+            // Setup event listeners for automatic calculation
+            document.getElementById('product').addEventListener('change', calculateProject);
+            document.getElementById('region').addEventListener('change', function() {
+                const windInput = document.getElementById('wind');
+                if (this.value === 'corpus') {
+                    document.getElementById('wind-badge').classList.remove('hidden');
+                    windInput.value = '750';
+                    windInput.readOnly = true;
+                    document.getElementById('wind-note').textContent = 'Required for Corpus Christi';
+                } else {
+                    document.getElementById('wind-badge').classList.add('hidden');
+                    windInput.value = '0';
+                    windInput.readOnly = false;
+                    document.getElementById('wind-note').textContent = 'Optional for most regions';
+                }
+                calculateProject();
+            });
+            document.getElementById('sq').addEventListener('input', calculateProject);
+            document.getElementById('decking').addEventListener('input', calculateProject);
+            document.getElementById('fascia').addEventListener('input', calculateProject);
+            document.getElementById('soffit').addEventListener('input', calculateProject);
+            document.getElementById('wind').addEventListener('input', calculateProject);
+
+            // Initial calculation
+            calculateProject();
+        });
+
+        // Price lookup tool functions
+        function openPriceModal(market) {
+            const info = priceLookupData[market];
+            modalTitle.textContent = market;
+            modalBody.innerHTML = `
+                <p><strong>Base Price/SQ:</strong> ${info.base}</p>
+                <table>
+                    <thead><tr><th>Component</th><th>Cost</th></tr></thead>
+                    <tbody>
+                        <tr><td>Labor</td><td>${info.labor}</td></tr>
+                        <tr><td>Shingles</td><td>${info.shingle}</td></tr>
+                        <tr><td>Other Materials</td><td>${info.other}</td></tr>
+                    </tbody>
+                </table>
+                <h3 style="margin-top:1.25rem;">Common Adders</h3>
+                <table>
+                    <thead><tr><th>Adder</th><th>Cost</th></tr></thead>
+                    <tbody>
+                        ${Object.entries(info.adders).map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join('')}
+                    </tbody>
+                </table>
+            `;
+            priceModal.showModal();
+        }
+
+        // Calculator functions
+        function calculateProject() {
+            const product = document.getElementById('product').value;
+            const region = document.getElementById('region').value;
+            const sq = parseFloat(document.getElementById('sq').value) || 0;
+
+            // Validate required fields
+            if (!product || !region || sq <= 0) {
+                document.getElementById('financingSection').classList.add('hidden');
+                return;
+            }
+
+            currentSQ = sq;
+            
+            // Calculate base costs (with built-in 75% markup)
+            baseCostPerSQ = pricingData[product].regional[region] * 1.75; // 75% markup
+            const baseCost = baseCostPerSQ * sq;
+            
+            // Standard inclusions (included in base price)
+            const standardPlywood = 10;
+            const standardPlywoodCost = 0; // Included
+            const standardFascia = 15;
+            const standardFasciaCost = 0; // Included
+            const standardSoffit = 5;
+            const standardSoffitCost = 0; // Included
+            
+            // Additional services
+            const additionalDecking = parseFloat(document.getElementById('decking').value) || 0;
+            const additionalDeckingCost = additionalDecking * 100;
+            const additionalFascia = parseFloat(document.getElementById('fascia').value) || 0;
+            const additionalFasciaCost = additionalFascia * 15;
+            const additionalSoffit = parseFloat(document.getElementById('soffit').value) || 0;
+            const additionalSoffitCost = additionalSoffit * 25;
+            
+            // Fees
+            const permitCost = baseCost * 0.035;
+            document.getElementById('permit').value = permitCost.toFixed(2);
+            
+            // Wind certification - $750 for Corpus, otherwise user input
+            const windCost = region === 'corpus' ? 750 : (parseFloat(document.getElementById('wind').value) || 0);
+
+            // Calculate totals
+            const subtotal = baseCost + standardPlywoodCost + standardFasciaCost + standardSoffitCost + 
+                            additionalDeckingCost + additionalFasciaCost + additionalSoffitCost + 
+                            permitCost + windCost;
+            const tax = subtotal * 0.0825;
+            currentTotal = subtotal + tax;
+
+            // Apply any active discount
+            applyCurrentDiscount();
+
+            // Update display
+            document.getElementById('baseCost').textContent = '$' + baseCost.toFixed(2);
+            document.getElementById('deckingCost').textContent = '$' + additionalDeckingCost.toFixed(2);
+            document.getElementById('fasciaCost').textContent = '$' + additionalFasciaCost.toFixed(2);
+            document.getElementById('soffitCost').textContent = '$' + additionalSoffitCost.toFixed(2);
+            document.getElementById('permitCost').textContent = '$' + permitCost.toFixed(2);
+            document.getElementById('windCost').textContent = '$' + windCost.toFixed(2);
+            document.getElementById('taxCost').textContent = '$' + tax.toFixed(2);
+            document.getElementById('totalPrice').textContent = '$' + currentTotal.toFixed(2);
+            document.getElementById('basePricePerSQ').textContent = '$' + baseCostPerSQ.toFixed(2);
+            document.getElementById('finalProjectPrice').textContent = '$' + finalProjectPrice.toFixed(2);
+
+            // Show financing section
+            document.getElementById('financingSection').classList.remove('hidden');
+        }
+
+        function applyCurrentDiscount() {
+            if (!currentDiscount) {
+                finalProjectPrice = currentTotal;
+                return;
+            }
+
+            switch(currentDiscount.type) {
+                case 'veteran':
+                case 'firstResponder':
+                case 'teacher':
+                    finalProjectPrice = currentTotal * 0.9; // 10% off
+                    break;
+                case 'sameDay':
+                    finalProjectPrice = currentTotal - 500; // $500 off
+                    break;
+                case 'senior':
+                    finalProjectPrice = currentTotal; // No discount, handled in payment terms
+                    break;
+                default:
+                    finalProjectPrice = currentTotal;
+            }
+        }
+
+        // Side menu functions
+        function toggleMenu() {
+            menuContent.classList.toggle('active');
+        }
+
+        function applyDiscount(type) {
+            currentDiscount = { type };
+            calculateProject();
+            toggleMenu();
+            
+            // Show confirmation
+            let message = '';
+            switch(type) {
+                case 'veteran': message = 'Veteran discount (10%) applied'; break;
+                case 'firstResponder': message = 'First Responder discount (10%) applied'; break;
+                case 'teacher': message = 'Teacher discount (10%) applied'; break;
+                case 'sameDay': message = 'Same Day Sign Up discount ($500) applied'; break;
+                case 'senior': message = 'Senior Citizen benefit (6 months no payments) applied'; break;
+            }
+            alert(message);
+        }
+
+        // Tab system functions
+        function openTab(tabId) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Show the selected tab and mark button as active
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+        
+        // In-house payment calculator function
+        function calculateInHousePayment() {
+            const amount = parseFloat(document.getElementById('loanAmount').value);
+            let term = document.getElementById('loanTerm').value;
+            let rate = parseFloat(document.getElementById('interestRate').value);
+            
+            // Validate inputs
+            if (!amount || amount < 1000) {
+                alert('Please enter a loan amount of at least $1,000');
+                return;
+            }
+            
+            if (term === 'custom') {
+                const customTerm = prompt('Enter custom term in months (12-84):', '60');
+                if (!customTerm || customTerm < 12 || customTerm > 84) {
+                    alert('Term must be between 12-84 months');
+                    return;
+                }
+                term = parseInt(customTerm);
+            } else {
+                term = parseInt(term);
+            }
+            
+            if (!rate || rate < 3.99 || rate > 15) {
+                alert('Please enter an interest rate between 3.99% and 15%');
+                return;
+            }
+            
+            // Adjust for senior citizen benefit
+            if (currentDiscount && currentDiscount.type === 'senior') {
+                term = Math.max(term, 6); // Ensure at least 6 months
+                alert('Note: First 6 months will be no-payment period as part of Senior Citizen benefit');
+            }
+            
+            // Calculate monthly payment
+            const monthlyRate = rate / 100 / 12;
+            const payment = amount * monthlyRate * Math.pow(1 + monthlyRate, term) / (Math.pow(1 + monthlyRate, term) - 1);
+            const totalInterest = (payment * term) - amount;
+            const totalCost = amount + totalInterest;
+            
+            // Display results
+            document.getElementById('monthlyPayment').textContent = '$' + payment.toFixed(2);
+            document.getElementById('totalInterest').textContent = '$' + totalInterest.toFixed(2);
+            document.getElementById('totalCost').textContent = '$' + totalCost.toFixed(2);
+            
+            document.getElementById('inhouseResult').classList.remove('hidden');
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.side-menu') && !event.target.closest('.menu-content')) {
+                menuContent.classList.remove('active');
+            }
+        });
+    </script>
+
+</body></html>

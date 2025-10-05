@@ -1,0 +1,69 @@
+console.log("Content Script is working!");
+
+let clickCount = 5;  // Number of times the process should run
+let currentCount = 0; // To keep track of how many times the process has run
+
+function clickAndClose() {
+    let button = document.querySelector("#upButtonCountdown");
+
+    if (button) {
+        button.click();
+        console.log("Button clicked!");
+
+        // Close the popup after a short delay (1 second)
+        setTimeout(closePopup, 1000); // Close popup after 1 second delay
+    } else {
+        console.log("Button not found!");
+    }
+}
+
+function closePopup() {
+    let popup = document.querySelector("body > div.xenOverlay > div > a");
+    if (popup) {
+        popup.click();
+        console.log("Popup closed!");
+    } else {
+        console.log("Popup not found!");
+    }
+
+    // Increment count and repeat process if count is less than 5
+    currentCount++;
+
+    if (currentCount < clickCount) {
+        setTimeout(clickAndClose, Math.floor(Math.random() * 1000) + 3000); // Delay between 3-4 seconds (3000 to 4000 ms)
+    } else {
+        console.log("Completed all clicks.");
+    }
+}
+
+// Start the process for the first time
+clickAndClose();
+
+
+________________________________________________________________________--
+backgroun.js
+
+chrome.runtime.onInstalled.addListener(function() {
+    chrome.storage.sync.set({ clickCount: 5, interval: 2, shiftTab: true });
+});
+
+chrome.action.onClicked.addListener(function(tab) {
+    chrome.storage.sync.get(['clickCount', 'interval', 'shiftTab'], function(data) {
+        let count = data.clickCount;
+        let interval = data.interval;
+        let shiftTab = data.shiftTab;
+
+        console.log("Extension activated. Sending message to click the button.");
+
+        // Send message to content script to trigger the button click
+        chrome.scripting.executeScript({
+            target: {tabId: tab.id},
+            func: sendMessageToClickButton
+        });
+    });
+});
+
+function sendMessageToClickButton() {
+    console.log("Sending message to content script...");
+    chrome.runtime.sendMessage({ action: "clickButton" });
+}

@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Raven — Roofing Proposal (v7 Smooth Flow + FAQ Videos)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root[data-theme="light"]{
+      --bg:#FFFFFF; --surface-1:#FFFFFF; --surface-2:#F7FAFC; --surface-3:#EDF2F7;
+      --text-primary:#101828; --text-secondary:#475467; --text-inverse:#FFFFFF;
+      --border:#E2E8F0; --focus:#0A5BD3;
+      --primary:#0A5BD3; --secondary:#0B2C4A; --accent:#E9911A;
+      --success:#10B981; --warning:#F59E0B; --error:#EF4444;
+      --shadow: 0 10px 22px rgba(0,0,0,.08);
+    }
+    :root[data-theme="dark"]{
+      --bg:#0B1420; --surface-1:#121B2A; --surface-2:#162235; --surface-3:#1E2B40;
+      --text-primary:#E8EEF6; --text-secondary:#B7C8DA; --text-inverse:#0B1420;
+      --border:#24364D; --focus:#3DA9FC;
+      --primary:#3DA9FC; --secondary:#10253F; --accent:#F59E0B;
+      --success:#10B981; --warning:#F59E0B; --error:#F87171;
+      --shadow: 0 12px 28px rgba(0,0,0,.45);
+    }
+    *{ box-sizing:border-box; }
+    html,body{ margin:0; height:100%; }
+    body{
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+      background: var(--bg); color: var(--text-primary); line-height: 1.6;
+    }
+    h1,h2,h3{ font-family: Montserrat, Inter, sans-serif; margin:0 0 .5rem; line-height:1.2; }
+    h1{ font-weight:800; letter-spacing:-.02em; }
+    h2{ font-weight:700; }
+    a{ color: var(--primary); text-decoration:none; }
+    .container{ max-width:1100px; margin:0 auto; padding:1.1rem; }
+    .muted{ color: var(--text-secondary); }
+    .row{ display:flex; gap:.5rem; align-items:center; flex-wrap:wrap; }
+    .chip{ font-size:.78rem; padding:.2rem .6rem; border-radius:999px; background:var(--surface-2); border:1px solid var(--border); }
+    .pill{ border-radius:999px; padding:.45rem .8rem; background:var(--surface-2); border:1px solid var(--border); }
+    .btn{ display:inline-flex; align-items:center; justify-content:center; gap:.5rem; padding:.75rem 1rem; border-radius:14px; border:1px solid var(--border); background:var(--surface-2); color:var(--text-primary); cursor:pointer; transition: transform .06s, background .2s, box-shadow .2s; user-select:none; }
+    .btn:hover{ box-shadow: var(--shadow); }
+    .btn:active{ transform: translateY(1px); }
+    .btn-primary{ background: var(--primary); color:#fff; border-color: transparent; }
+    .btn-ghost{ background: transparent; }
+    .btn-icon{ width:42px; height:42px; padding:0; font-size:18px; }
+    .switch{ position:relative; display:inline-block; width:52px; height:28px; border:1px solid var(--border); border-radius:999px; background:var(--surface-3); cursor:pointer; }
+    .switch input{ display:none; }
+    .switch .knob{ position:absolute; top:2px; left:2px; width:24px; height:24px; border-radius:999px; background:#fff; box-shadow:0 2px 6px rgba(0,0,0,.15); transition:left .2s; }
+    .switch input:checked + .knob{ left:26px; }
+
+    header{ position: sticky; top:0; z-index:30; backdrop-filter: blur(8px); background: color-mix(in oklab, var(--surface-1) 88%, transparent); border-bottom:1px solid var(--border); }
+    .header-row{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .brand{ display:flex; align-items:center; gap:10px; }
+    .logo{ width:36px; height:36px; border-radius:10px; background: linear-gradient(135deg, var(--primary), var(--secondary)); display:grid; place-items:center; color:#fff; font-weight:800; font-family: Montserrat; }
+    .badge{ font-size:.8rem; color: var(--text-secondary); }
+
+    section{ padding:1rem 0; }
+    .card{ background: var(--surface-1); border:1px solid var(--border); border-radius:16px; padding:1rem; }
+    .grid-3{ display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:1rem; }
+    .grid-2{ display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:1rem; }
+
+    /* Options */
+    .segmented{ display:inline-flex; background:var(--surface-2); border:1px solid var(--border); border-radius:999px; padding:.25rem; }
+    .segmented button{ border:none; background:transparent; padding:.5rem .9rem; border-radius:999px; cursor:pointer; color:var(--text-secondary); font-weight:600; }
+    .segmented button.active{ background:var(--surface-1); color:var(--text-primary); border:1px solid var(--border); }
+    .cards{ display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:1rem; }
+    .option{ position:relative; display:grid; gap:.75rem; transition: box-shadow .2s, transform .08s; }
+    .option:hover{ box-shadow: var(--shadow); transform: translateY(-1px); }
+    .ribbon{ position:absolute; top:12px; left:12px; background: var(--accent); color:#fff; font-size:.75rem; padding:.25rem .5rem; border-radius:999px; }
+    .price{ font-family: Montserrat; font-weight:800; font-size:1.6rem; }
+    .per{ color:var(--text-secondary); font-weight:600; font-size:.9rem; }
+    .features{ margin:0; padding-left:1.1rem; display:grid; gap:.35rem; }
+    .option.selected{ outline: 2px solid var(--primary); }
+
+    /* Tables */
+    table{ width:100%; border-collapse: collapse; }
+    th,td{ padding:.75rem; border-bottom:1px solid var(--border); text-align:left; }
+    th{ color: var(--text-secondary); background: var(--surface-2); }
+
+    /* Sticky Summary */
+    .actionbar{ position: sticky; bottom:0; z-index:25; background: color-mix(in oklab, var(--surface-1) 95%, transparent); border-top:1px solid var(--border); backdrop-filter: blur(8px) saturate(140%); }
+    .action-inner{ max-width:1100px; margin:0 auto; padding:.6rem 1rem; display:flex; align-items:center; justify-content:space-between; gap:.6rem; flex-wrap:wrap; }
+
+    /* Presenter with tabs */
+    .presenter{ position: fixed; inset:0; z-index:90; display:none; background: var(--bg); }
+    .presenter.active{ display:block; }
+    .pbar{ padding:.6rem 1rem; border-bottom:1px solid var(--border); background: color-mix(in oklab, var(--surface-1) 92%, transparent); display:flex; align-items:center; justify-content:space-between; }
+    .ptabs{ display:flex; gap:.4rem; }
+    .ptab{ padding:.4rem .65rem; border:1px solid var(--border); border-radius:999px; background:var(--surface-2); cursor:pointer; }
+    .ptab.active{ background:var(--primary); color:#fff; border-color: transparent; }
+    .pbody{ display:grid; grid-template-columns: 1fr 320px; gap:1rem; height: calc(100% - 60px); padding:1rem; }
+    .pslide, .pvideo{ background: var(--surface-1); border:1px solid var(--border); border-radius:16px; padding: clamp(16px, 3vw, 32px); width:min(94vw, 1100px); margin:0 auto; min-height:60vh; }
+    .pside{ background: var(--surface-1); border:1px solid var(--border); border-radius:16px; padding:.5rem; overflow:auto; }
+    .pthumb{ padding:.5rem; border-radius:10px; border:1px solid var(--border); margin-bottom:.5rem; cursor:pointer; }
+    .pthumb.active{ outline:2px solid var(--primary); }
+    .faqitem{ padding:.55rem; border:1px solid var(--border); border-radius:10px; margin-bottom:.5rem; cursor:pointer; }
+    .faqitem.active{ outline:2px solid var(--primary); }
+    .pfooter{ position:absolute; left:0; right:0; bottom:0; padding:.5rem 1rem; display:flex; align-items:center; justify-content:space-between; border-top:1px solid var(--border); background: color-mix(in oklab, var(--surface-1) 92%, transparent); }
+    .progress{ height:6px; background: var(--surface-3); border-radius:999px; overflow:hidden; flex:1; margin-right:1rem; }
+    .progress>span{ display:block; height:100%; width:0; background: var(--primary); }
+
+    @media (max-width: 980px){
+      .cards, .grid-3, .grid-2{ grid-template-columns: 1fr; }
+      .action-inner{ flex-direction: column; align-items:flex-start; }
+      .pbody{ grid-template-columns: 1fr; }
+    }
+    @media print{
+      header, .actionbar, .presenter{ display:none !important; }
+      body{ background:#fff; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-row">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">RV</div>
+        <div>
+          <strong>Raven Proposal</strong>
+          <div class="badge">Roofing • Good / Better / Best</div>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn" id="presentBtn" title="Presenter mode">🎤 Present</button>
+        <button class="btn btn-ghost" id="printBtn" title="Print / Save PDF">🖨️ Print</button>
+        <label class="row" title="Toggle dark mode">
+          <span class="muted">Dark</span>
+          <span class="switch"><input id="themeToggle" type="checkbox"><span class="knob"></span></span>
+        </label>
+        <a href="#cta" class="btn btn-primary">Accept &amp; Sign</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- HERO -->
+    <section id="hero">
+      <div class="card">
+        <div class="row" style="justify-content: space-between;">
+          <div>
+            <h1 class="proposal-title">Roofing Proposal for Dawn Wieczorek</h1>
+            <div class="muted">543 Golf Rd, Lapeer, MI 48446 • Prepared by Triguard Roofing • Proposal #PROP-789</div>
+          </div>
+          <div class="row">
+            <span class="chip">Prepared <strong id="preparedDate">Aug 26, 2025</strong></span>
+            <span class="chip">Valid to <strong>Sep 25, 2025</strong></span>
+            <span class="chip">Rep <strong>A. Rivera</strong></span>
+          </div>
+        </div>
+        <div class="grid-3">
+          <div class="card"><div class="muted">Project Investment (Cash)</div><div id="cashTotal" style="font:800 1.4rem Montserrat;">$14,950</div></div>
+          <div class="card"><div class="muted">As Low As</div><div style="font:800 1.4rem Montserrat;"><span id="asLowAs">$172</span> <span class="muted">/mo</span></div><div class="muted" style="font-size:.85rem; margin-top:.25rem;">Estimate only—final terms via lender</div></div>
+          <div class="card">
+            <div><div class="muted">Estimated Install Window</div><div id="installWindow" style="font:800 1.05rem Montserrat;">TBD</div></div>
+            <div class="muted" style="margin-top:.4rem; font-size:.9rem;">* Based on 2–3 weeks from proposal. Product availability and weather may affect scheduling.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- OPTIONS (no step labels; smooth flow) -->
+    <section id="options">
+      <div class="row" style="justify-content: space-between;">
+        <h2>Your Options</h2>
+        <div class="segmented" role="tablist" aria-label="Price display mode">
+          <button role="tab" aria-selected="false" id="tab-cash">Cash</button>
+          <button role="tab" aria-selected="true" id="tab-monthly" class="active">Monthly</button>
+        </div>
+      </div>
+      <div class="cards">
+        <article class="card option" data-key="good">
+          <div class="ribbon">Most Affordable</div>
+          <header><h3>Good</h3><div class="muted">Titan XT • Solid protection</div></header>
+          <div class="price"><span class="price-value" data-cash="12980">$0</span> <span class="per"><span class="mode-label">/mo</span></span></div>
+          <ul class="features">
+            <li>✓ Titan XT shingles</li>
+            <li>✓ Standard ridge & starter</li>
+            <li>✓ Drip edge • Synthetic underlayment</li>
+            <li>— Basic ventilation</li>
+          </ul>
+          <button class="btn btn-primary selectBtn">Select Good</button>
+        </article>
+        <article class="card option selected" data-key="better">
+          <div class="ribbon">Recommended</div>
+          <header><h3>Better</h3><div class="muted">Titan XT IR • Balanced value</div></header>
+          <div class="price"><span class="price-value" data-cash="14950">$0</span> <span class="per"><span class="mode-label">/mo</span></span></div>
+          <ul class="features">
+            <li>✓ Titan XT <strong>Impact-Resistant</strong></li>
+            <li>✓ Ridge vent system</li>
+            <li>✓ Ice & water at valleys/eaves</li>
+            <li>✓ Enhanced workmanship warranty</li>
+          </ul>
+          <button class="btn btn-primary selectBtn">Select Better</button>
+        </article>
+        <article class="card option" data-key="best">
+          <div class="ribbon">Best Value</div>
+          <header><h3>Best</h3><div class="muted">Titan XT IR + Accessory Kit</div></header>
+          <div class="price"><span class="price-value" data-cash="17750">$0</span> <span class="per"><span class="mode-label">/mo</span></span></div>
+          <ul class="features">
+            <li>✓ All “Better” features</li>
+            <li>✓ Premium ridge & starter</li>
+            <li>✓ High‑flow ventilation</li>
+            <li>✓ Extended manufacturer registration</li>
+          </ul>
+          <button class="btn btn-primary selectBtn">Select Best</button>
+        </article>
+      </div>
+    </section>
+
+    <!-- REVIEW & PAYMENTS -->
+    <section id="review">
+      <h2>Review &amp; Payments</h2>
+      <div class="grid-2">
+        <div class="card">
+          <strong>Scope Summary</strong>
+          <table aria-label="Scope summary">
+            <thead><tr><th>Item</th><th style="text-align:right">Amount</th></tr></thead>
+            <tbody id="summaryBody">
+              <tr><td>Selected option</td><td style="text-align:right" id="sumOption">$14,950</td></tr>
+            </tbody>
+            <tfoot>
+              <tr><th>Total (cash)</th><th style="text-align:right" id="sumTotal">$14,950</th></tr>
+            </tfoot>
+          </table>
+          <div class="muted" style="margin-top:.5rem">Tax included if applicable. Final contract governs.</div>
+        </div>
+
+        <div class="card">
+          <strong>Monthly Estimate</strong>
+          <div class="row" style="justify-content:space-between; margin-top:.4rem;">
+            <div class="muted">Sample terms</div>
+            <div class="pill">APR 9.99% • 120 months • $0 down</div>
+          </div>
+          <div style="font:800 1.6rem Montserrat; margin-top:.4rem;"><span id="monthlyOut">$172</span> <span class="muted">/mo</span></div>
+          <div class="row" style="margin-top:.6rem;">
+            <a href="#" class="btn btn-primary">Start Pre‑Qual</a>
+            <a href="#" class="btn">See Example Terms</a>
+          </div>
+          <div class="muted" style="margin-top:.4rem; font-size:.9rem;">Estimates only. Final terms via lender; credit approval required.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- POTENTIAL ADJUSTMENTS (read-only) -->
+    <section id="adjustments">
+      <h2>Potential Adjustments (not included unless required)</h2>
+      <div class="card">
+        <table class="small" aria-label="Potential adjustments">
+          <thead><tr><th>Item</th><th>Unit</th><th>Reference Price</th><th>When it applies</th></tr></thead>
+          <tbody>
+            <tr><td>Additional Decking</td><td>per sheet</td><td>Set as needed</td><td>Hidden wood damage found during tear‑off</td></tr>
+            <tr><td>Additional Structure</td><td>per hour</td><td>Set as needed</td><td>Framing issues requiring correction</td></tr>
+            <tr><td>Structural Repair</td><td>per hour</td><td>Set as needed</td><td>Critical structural fixes</td></tr>
+            <tr><td>Remove the Gutters</td><td>per LF</td><td>Set as needed</td><td>If existing gutters must be removed</td></tr>
+            <tr><td>Skylight (variable)</td><td>per unit</td><td>Set as needed</td><td>Replacement of skylight assemblies</td></tr>
+            <tr><td>Chimney Flashing</td><td>per chimney</td><td><strong>$350</strong></td><td>When chimney requires new custom flashing</td></tr>
+            <tr><td>Extra Ice &amp; Water</td><td>per square</td><td>$85</td><td>Additional protection in valleys/eaves</td></tr>
+            <tr><td>Pitch &gt; 6/12 Surcharge</td><td>per square</td><td>$10</td><td>For roofs steeper than 6/12 (applies to measured squares)</td></tr>
+          </tbody>
+        </table>
+        <div class="muted" style="margin-top:.5rem; font-size:.9rem;">Any necessary adjustments are reviewed with you before work proceeds and reflected in the final contract.</div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="cta">
+      <div class="row" style="justify-content:center; gap:.75rem; margin:1rem 0;">
+        <a class="btn btn-primary" href="#">Accept &amp; Sign</a>
+        <button class="btn" id="printBtn2">Print / Save PDF</button>
+        <a class="btn" id="shareBtn">Share Link</a>
+      </div>
+    </section>
+
+    <!-- TERMS -->
+    <section id="legal">
+      <h2>Terms &amp; Disclaimers</h2>
+      <ul class="features">
+        <li>Estimated install window is 2–3 weeks from proposal date and may be affected by product availability and weather.</li>
+        <li>Proposal is an estimate based on measurements &amp; selections; final contract governs.</li>
+        <li>Work includes tear‑off, install, standard cleanup. Wood replacement and hidden damage billed as needed.</li>
+        <li>All warranties are subject to manufacturer terms and proper ventilation/installation requirements.</li>
+        <li>E‑sign compliant per ESIGN/UETA. Signed package and audit trail will be provided.</li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- Sticky Action Bar -->
+  <div class="actionbar" role="region" aria-label="Summary bar">
+    <div class="action-inner">
+      <div class="row">
+        <span class="muted">Selected:</span>
+        <strong id="selectedLabel">Better</strong>
+        <span class="pill" id="summaryMonthly">$0/mo</span>
+        <span class="muted">or</span>
+        <span class="pill" id="summaryCash">$14,950 cash</span>
+      </div>
+      <div class="row">
+        <span class="chip">Install Window: <span id="summaryWindow">TBD</span></span>
+        <a href="#cta" class="btn btn-primary">Accept &amp; Sign</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Presenter (for reps): Slides + FAQ Videos -->
+  <div class="presenter" id="presenter" aria-hidden="true">
+    <div class="pbar">
+      <div class="row">
+        <strong>Presentation</strong><span class="muted" id="pCounter" style="margin-left:.5rem;">1 / 6</span>
+      </div>
+      <div class="ptabs">
+        <button class="ptab active" id="tabSlides">Slides</button>
+        <button class="ptab" id="tabFAQ">FAQ Videos</button>
+      </div>
+      <div class="row"><button class="btn" id="pExit">✖ Exit</button></div>
+    </div>
+    <div class="pbody">
+      <div class="pslide" id="pSlide"></div>
+      <div class="pside" id="pSide">
+        <!-- Populated depending on Slides/FAQ mode -->
+      </div>
+      <div class="pfooter" id="pFooter">
+        <div class="progress"><span id="pProgress"></span></div>
+        <div class="row" id="navBtns"><button class="btn btn-icon" id="pPrev">◀</button><button class="btn btn-icon" id="pNext">▶</button></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="container">
+    <div class="row"><div>© 2025 Triguard Roofing &amp; Home Services</div><div class="muted">833‑517‑ROOF • support@triguardhomeservices.com</div></div>
+  </footer>
+
+  <script>
+    // ===== Utilities =====
+    const $ = (s, r=document)=>r.querySelector(s);
+    const $$ = (s, r=document)=>Array.from(r.querySelectorAll(s));
+    const currency = n => '$' + Number(n).toLocaleString(undefined, {maximumFractionDigits:0});
+    function amortize(p, aprPct, months){ const r=(aprPct/100)/12; return r===0 ? p/months : p*(r*Math.pow(1+r,months))/(Math.pow(1+r,months)-1); }
+    function fmtDate(dt){ const m = dt.toLocaleString('en-US',{month:'short'}); return `${m} ${String(dt.getDate()).padStart(2,'0')}, ${dt.getFullYear()}`; }
+    function dateRangeStr(a,b){ const sameMonth = a.getMonth()===b.getMonth() && a.getFullYear()===b.getFullYear(); const m1=a.toLocaleString('en-US',{month:'short'}), m2=b.toLocaleString('en-US',{month:'short'}); const d1=a.getDate(), d2=b.getDate(), y=b.getFullYear(); return sameMonth ? `${m1} ${d1}–${d2}, ${y}` : `${m1} ${d1} – ${m2} ${d2}, ${y}`; }
+
+    // ===== Theme & Print =====
+    $('#themeToggle').addEventListener('change', e=> document.documentElement.setAttribute('data-theme', e.target.checked?'dark':'light'));
+    $('#printBtn').addEventListener('click', ()=>window.print());
+    $('#printBtn2').addEventListener('click', ()=>window.print());
+
+    // ===== Prepared date and window (read-only) =====
+    const prepared = new Date('2025-08-26');
+    $('#preparedDate').textContent = fmtDate(prepared);
+    function setDefaultWindow(){
+      const start = new Date(prepared); start.setDate(start.getDate()+14);
+      const end = new Date(prepared); end.setDate(end.getDate()+21);
+      const range = dateRangeStr(start, end);
+      $('#installWindow').textContent = range;
+      $('#summaryWindow').textContent = range;
+    }
+    setDefaultWindow();
+
+    // ===== Pricing Mode Toggle =====
+    const tabCash = $('#tab-cash'); const tabMonthly = $('#tab-monthly'); const optionCards = $$('.option');
+    function updatePrices(){
+      const defaultAPR = 9.99, defaultTerm = 120;
+      let low = Infinity;
+      optionCards.forEach(card=>{
+        const span = card.querySelector('.price-value');
+        const cash = parseFloat(span.dataset.cash);
+        if(tabMonthly.classList.contains('active')){
+          const m = amortize(cash, defaultAPR, defaultTerm);
+          span.textContent = currency(Math.round(m));
+          card.querySelector('.mode-label').textContent = '/mo';
+          low = Math.min(low, m);
+        } else {
+          span.textContent = currency(Math.round(cash));
+          card.querySelector('.mode-label').textContent = 'cash';
+        }
+      });
+      if(low<Infinity){ $('#asLowAs').textContent = currency(Math.round(low)); $('#summaryMonthly').textContent = currency(Math.round(low)) + '/mo'; }
+      const selectedCash = parseFloat($('.option.selected .price-value').dataset.cash || '14950');
+      $('#summaryCash').textContent = currency(selectedCash) + ' cash';
+    }
+    tabCash.addEventListener('click', ()=>{ tabCash.classList.add('active'); tabCash.setAttribute('aria-selected','true'); tabMonthly.classList.remove('active'); tabMonthly.setAttribute('aria-selected','false'); updatePrices(); });
+    tabMonthly.addEventListener('click', ()=>{ tabMonthly.classList.add('active'); tabMonthly.setAttribute('aria-selected','true'); tabCash.classList.remove('active'); tabCash.setAttribute('aria-selected','false'); updatePrices(); });
+
+    // ===== Selection affects totals =====
+    function recomputeTotals(){
+      const base = parseFloat($('.option.selected .price-value').dataset.cash || '14950');
+      $('#cashTotal').textContent = currency(base);
+      $('#sumOption').textContent = currency(base);
+      $('#sumTotal').textContent = currency(base);
+      const m = amortize(base, 9.99, 120);
+      $('#monthlyOut').textContent = currency(Math.round(m));
+      $('#summaryMonthly').textContent = currency(Math.round(m)) + '/mo';
+    }
+    $$('.selectBtn').forEach(btn=>{
+      btn.addEventListener('click', e=>{
+        optionCards.forEach(c=>c.classList.remove('selected'));
+        const card = e.target.closest('.option'); card.classList.add('selected');
+        const label = card.querySelector('h3').textContent.trim();
+        $('#selectedLabel').textContent = label;
+        updatePrices(); recomputeTotals();
+        document.querySelector('#review').scrollIntoView({behavior:'smooth'});
+      });
+    });
+
+    // Share link
+    $('#shareBtn').addEventListener('click', async ()=>{
+      const url = location.href;
+      if(navigator.share){ try{ await navigator.share({title:'Your Raven Proposal', url}); }catch(e){} }
+      else { await navigator.clipboard.writeText(url); alert('Link copied to clipboard'); }
+    });
+
+    // ===== Presenter (reps): Slides + FAQ videos =====
+    const presenter = $('#presenter'), pSlide = $('#pSlide'), pSide = $('#pSide');
+    let pIndex = 0; let mode = 'slides'; // 'slides' or 'faq'
+
+    const SLIDES = () => {
+      const option = $('#selectedLabel').textContent.trim();
+      const cash = $('#cashTotal').textContent;
+      const monthly = $('#summaryMonthly').textContent;
+      const window = $('#installWindow').textContent;
+      return [
+        {title:'Welcome', lead:'We’ll cover your options, what’s included, payments, and next steps.'},
+        {title:'Why Replace', lead:'Prevent hidden deck damage, preserve resale value, and reduce risk.'},
+        {title:'Your Choice', lead:`Selected option: ${option}.`},
+        {title:'Price & Payments', lead:`Total: ${cash} • ${monthly}`},
+        {title:'Install Window', lead:`Estimated ${window} (availability & weather can affect schedule).`},
+        {title:'What’s Included', lead:'Tear‑off, install, standard cleanup; ventilation and key waterproofing in the chosen system.'}
+      ];
+    };
+
+    const FAQ_VIDEOS = [
+      {id:'insurance', title:'Insurance & Deductibles', video:'https://www.youtube.com/embed/VIDEO_ID_INSURANCE', notes:['We document roof conditions','By law, deductible is required','Upgrades beyond like‑kind/quality are optional']},
+      {id:'warranty', title:'Warranty: What’s covered?', video:'https://www.youtube.com/embed/VIDEO_ID_WARRANTY', notes:['Lifetime workmanship from us','Manufacturer materials per their terms','Registration provided after install']},
+      {id:'materials', title:'Impact‑Resistant Shingles', video:'https://www.youtube.com/embed/VIDEO_ID_MATERIALS', notes:['IR shingles help resist hail/wind','Can reduce frequency of repairs','Works best with correct ventilation']},
+      {id:'ventilation', title:'Why ventilation matters', video:'https://www.youtube.com/embed/VIDEO_ID_VENTILATION', notes:['Extends shingle life','Reduces attic heat/moisture','Ridge + intake recommended']},
+      {id:'cleanup', title:'Protecting your property', video:'https://www.youtube.com/embed/VIDEO_ID_CLEANUP', notes:['Landscape protection','Magnet sweep daily','Final walk‑through with you']},
+      {id:'financing', title:'Financing overview', video:'https://www.youtube.com/embed/VIDEO_ID_FINANCING', notes:['Soft‑pull pre‑qual','Flexible terms','No prepayment penalty (confirm per lender)']},
+      {id:'schedule', title:'Scheduling & availability', video:'https://www.youtube.com/embed/VIDEO_ID_SCHEDULE', notes:['Typical window 2–3 weeks','Product availability can shift dates','We’ll confirm once materials are secured']}
+    ];
+
+    function renderSlides(){
+      const list = SLIDES();
+      const s = list[pIndex];
+      pSlide.className = 'pslide';
+      pSlide.innerHTML = `<h1>${s.title}</h1><p class="muted" style="font-size:1.05rem">${s.lead}</p>`;
+      pSide.innerHTML = '<div style="padding:.4rem .4rem .2rem;"><strong>Slides</strong></div>';
+      list.forEach((it, i)=>{
+        const th = document.createElement('div'); th.className='pthumb'+(i===pIndex?' active':''); th.innerHTML = `<strong>${i+1}. ${it.title}</strong><div class="muted" style="font-size:.85rem">${it.lead}</div>`;
+        th.addEventListener('click', ()=>{ pIndex=i; renderSlides(); updateProgress(i, list.length); });
+        pSide.appendChild(th);
+      });
+      updateProgress(pIndex, list.length);
+    }
+
+    function renderFAQ(activeId){
+      pSlide.className = 'pvideo';
+      const active = FAQ_VIDEOS.find(x=>x.id===activeId) || FAQ_VIDEOS[0];
+      pSlide.innerHTML = `
+        <h1>${active.title}</h1>
+        <div style="aspect-ratio:16/9; width:100%; max-width:960px; background:#000; border-radius:12px; overflow:hidden; margin:.5rem 0;">
+          <iframe width="100%" height="100%" src="${active.video}" title="${active.title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <ul>${active.notes.map(n=>`<li>${n}</li>`).join('')}</ul>
+        <div class="muted" style="font-size:.9rem; margin-top:.5rem;">Replace VIDEO_ID_* with your own links (YouTube/Vimeo or MP4). Autoplay respects the viewer’s browser settings.</div>
+      `;
+      pSide.innerHTML = '<div style="padding:.4rem .4rem .2rem;"><strong>FAQ Topics</strong></div>';
+      FAQ_VIDEOS.forEach(it=>{
+        const item=document.createElement('div'); item.className='faqitem'+(it.id===active.id?' active':''); item.textContent = it.title;
+        item.addEventListener('click', ()=>renderFAQ(it.id));
+        pSide.appendChild(item);
+      });
+      // Hide slide nav in FAQ mode
+      $('#navBtns').style.display = 'none';
+      updateProgress(1,1); // full
+    }
+
+    function updateProgress(i, total){
+      $('#pCounter').textContent = `${i+1} / ${total}`;
+      $('#pProgress').style.width = ((i+1)/total*100).toFixed(1)+'%';
+      $('#navBtns').style.display = mode==='slides' ? 'flex' : 'none';
+    }
+
+    function openPresenter(){ presenter.classList.add('active'); presenter.setAttribute('aria-hidden','false'); mode='slides'; pIndex=0; $('#tabSlides').classList.add('active'); $('#tabFAQ').classList.remove('active'); renderSlides(); }
+    function closePresenter(){ presenter.classList.remove('active'); presenter.setAttribute('aria-hidden','true'); }
+    $('#presentBtn').addEventListener('click', openPresenter);
+    $('#pExit').addEventListener('click', closePresenter);
+    $('#pPrev').addEventListener('click', ()=>{ if(mode!=='slides') return; pIndex=Math.max(0,pIndex-1); renderSlides(); });
+    $('#pNext').addEventListener('click', ()=>{ if(mode!=='slides') return; const total=SLIDES().length; pIndex=Math.min(total-1,pIndex+1); renderSlides(); });
+    document.addEventListener('keydown', (e)=>{ if(!presenter.classList.contains('active')) return; if(mode==='slides' && (e.key==='ArrowRight'||e.key==='PageDown')) { pIndex=Math.min(SLIDES().length-1,pIndex+1); renderSlides(); } if(mode==='slides' && (e.key==='ArrowLeft'||e.key==='PageUp')) { pIndex=Math.max(0,pIndex-1); renderSlides(); } if(e.key==='Escape') closePresenter(); });
+    $('#tabSlides').addEventListener('click', ()=>{ mode='slides'; $('#tabSlides').classList.add('active'); $('#tabFAQ').classList.remove('active'); renderSlides(); });
+    $('#tabFAQ').addEventListener('click', ()=>{ mode='faq'; $('#tabFAQ').classList.add('active'); $('#tabSlides').classList.remove('active'); renderFAQ(); });
+
+    // ===== Init =====
+    function init(){
+      updatePrices();
+      recomputeTotals();
+      $('#summaryCash').textContent = currency(parseFloat($('.option.selected .price-value').dataset.cash || '14950')) + ' cash';
+    }
+    init();
+  </script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "Button Clicker Extension",
+  "description": "Click a button on the page and close popup",
+  "version": "1.0",
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ]
+}

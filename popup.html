@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Auto Clicker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      width: 250px;
+      padding: 20px;
+      background-color: #f4f4f9;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 10px;
+    }
+
+    input[type="number"],
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .checkbox-group {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+    }
+
+    .checkbox-group label {
+      margin-left: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>Auto Clicker</h2>
+
+  <div class="form-group">
+    <label for="clicks">Number of Clicks:</label>
+    <input type="number" id="clicks" min="1" value="1">
+  </div>
+
+  <div class="form-group">
+    <label for="time">Time Between Clicks (in seconds):</label>
+    <input type="number" id="time" min="1" value="1">
+  </div>
+
+  <div class="form-group">
+    <label for="switchTabCount">Tab Switch Count:</label>
+    <input type="number" id="switchTab" min="1" value="1">
+  </div>
+
+  <div class="form-group">
+    <label for="waitTime">Wait Time After Switches (minutes):</label>
+    <input type="number" id="waitTime" min="1" value="1">
+  </div>
+
+  <div class="checkbox-group">
+    <input type="checkbox" id="switchTabCheck">
+    <label for="switchTabCheck">Switch to new tab after clicks</label>
+  </div>
+
+  <button id="start">Start</button>
+  <button id="stop">Stop</button>
+
+  <script src="popup.js"></script>
+</body>
+
+</html>
